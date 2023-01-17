@@ -1,0 +1,43 @@
+<canvas width=1300" height="900"></canvas>
+
+<script>
+    var pantalla = document.querySelector("canvas");
+    var pincel = pantalla.getContext("2d");
+    pincel.fillStyle = "lightgray";
+    pincel.fillRect(0, 0, 1300, 900);
+    radio = 80;
+    z = radio * 2;
+    function dibujarCirculo(x, y, radio, color) {
+        pincel.fillStyle = color;
+        pincel.beginPath();
+        pincel.arc(x, y, radio, 0, 2 * 3.14);
+        pincel.fill();
+    }
+    function dibujarFlor(x, y) {
+        dibujarCirculo(x, y + z, radio, "blue");
+        dibujarCirculo(x, y, radio, "red");
+        dibujarCirculo(x, y - z, radio, "yellow");
+        dibujarCirculo(x - z, y, radio, "orange");
+        dibujarCirculo(x + z, y, radio, "black");
+    }
+    var angle = 0;
+    var direction = 1;
+    var x = 600;
+    var y = 400;
+    function rotateAndDrawFlor() {
+        pincel.clearRect(0, 0, 1300, 900);
+        pincel.fillStyle = "lightgray";
+        pincel.fillRect(0, 0, 1300, 900);
+        pincel.translate(x, y);
+        pincel.rotate(angle);
+        x += Math.cos(angle) * direction;
+        y += Math.sin(angle) * direction;
+        if (x < radio || x > 1300 - radio || y < radio || y > 900 - radio) {
+            direction = -direction;
+        }
+        angle += 0.01 * direction;
+        dibujarFlor(-z, -z);
+        pincel.setTransform(1, 0, 0, 1, 0, 0);
+    }
+    setInterval(rotateAndDrawFlor, 30);
+</script>
