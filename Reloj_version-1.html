@@ -1,0 +1,75 @@
+<div class="reloj-centrado">
+    <canvas id="reloj" width="600" height="600"></canvas>
+    <script>
+        var pantalla = document.querySelector("#reloj");
+        var pincel = pantalla.getContext("2d");
+        var radio = 300;
+        var x = pantalla.width / 2;
+        var y = pantalla.height / 2;
+
+        function dibujarReloj() {
+            var date = new Date();
+            var segundos = date.getSeconds();
+            var minutos = date.getMinutes();
+            var horas = date.getHours();
+            // Borra el canvas antes de dibujar de nuevo
+            pincel.clearRect(0, 0, pantalla.width, pantalla.height);
+            // Dibuja el círculo del reloj
+            pincel.fill();
+            pincel.beginPath();
+            pincel.arc(x, y, radio, 0, 2 * Math.PI);
+            pincel.strokeStyle = "black";
+            pincel.stroke();
+            // Dibuja las marcas de las horas
+            for (var i = 0; i < 12; i++) {
+                pincel.save();
+                pincel.translate(x, y);
+                pincel.rotate((i) * (Math.PI * 2) / 12);
+                pincel.beginPath();
+                pincel.arc(0, -(radio - 25), 5, 0, Math.PI * 2, true);
+                pincel.fill();
+                pincel.font = "15px Arial";
+                pincel.textAlign = "center";
+                if(i==0)  pincel.fillText(12, 0, -(radio - 44));
+                else pincel.fillText(i, 0, -(radio - 44));
+                pincel.restore();
+                pincel.beginPath();
+                pincel.arc(x, y, radio - 10, (i - 2) * (Math.PI / 6), (i - 1) * (Math.PI / 6));
+                pincel.strokeStyle = "black";
+                pincel.stroke();
+            }
+            // Dibuja la aguja de las horas
+            pincel.beginPath();
+            pincel.moveTo(x, y);
+            pincel.lineTo(x + (radio - 40) * Math.cos(((horas % 12) / 6) * Math.PI - Math.PI / 2),
+                y + (radio - 40) * Math.sin(((horas % 12) / 6) * Math.PI - Math.PI / 2));
+            pincel.strokeStyle = "black";
+            pincel.stroke();
+            // Dibuja la aguja de los minutos
+            pincel.beginPath();
+            pincel.moveTo(x, y);
+            pincel.lineTo(x + (radio - 20) * Math.cos((minutos / 30) * Math.PI - Math.PI / 2),
+                y + (radio - 20) * Math.sin((minutos / 30) * Math.PI - Math.PI / 2));
+            pincel.strokeStyle = "black";
+            pincel.stroke();
+            // Dibuja la aguja de los segundos
+            pincel.beginPath();
+            pincel.moveTo(x, y);
+            pincel.lineTo(x + (radio - 10) * Math.cos((segundos / 30) * Math.PI - Math.PI / 2),
+                y + (radio - 10) * Math.sin((segundos / 30) * Math.PI - Math.PI / 2));
+            pincel.strokeStyle = "red";
+            pincel.stroke();
+        }
+        setInterval(dibujarReloj, 1000);
+    </script>
+</div>
+<style>
+    .reloj-centrado {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgb(55, 119, 202);
+        mar
+    }
+</style>
