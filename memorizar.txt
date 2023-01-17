@@ -1,0 +1,16 @@
+Pasos para subir un Git 
+Primero revisa los cambios tambien podemos ls o git pull para actualizar 
+con 
+
+	git commit
+
+ 2. git add nombre o si es todo pone un punto
+
+3. git commit -m "descripcion"		la descripción del ajuste.
+
+4. git push				para que se haga el cambio en el repositorio
+
+
+
+clonamos con:
+ git clone "url de repositorio"(sin comillas) -b dev -single-branch
